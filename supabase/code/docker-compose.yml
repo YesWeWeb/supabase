@@ -77,6 +77,11 @@ services:
       KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth,request-termination,ip-restriction
       KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
       KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+      KONG_NGINX_PROXY_PROXY_REQUEST_BUFFERING: "off"                                                                           
+      KONG_NGINX_PROXY_PROXY_READ_TIMEOUT: "600s"                                                                               
+      KONG_NGINX_PROXY_PROXY_SEND_TIMEOUT: "600s"
+      KONG_NGINX_PROXY_CLIENT_BODY_TIMEOUT: "600s"                                                                              
+      KONG_NGINX_PROXY_CLIENT_MAX_BODY_SIZE: "500m"
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
       DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
