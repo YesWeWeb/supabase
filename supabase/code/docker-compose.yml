@@ -504,6 +504,14 @@ services:
       - "--transport=sse"
       - "--sse-host=0.0.0.0"
       - "--sse-port=8000"
+    networks:
+      - default
+      - easypanel
 
 volumes:
   db-config:
+
+networks:
+  default:
+  easypanel:
+    external: true
