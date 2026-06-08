@@ -506,6 +506,23 @@ services:
       - "--sse-port=8000"
     networks:
       - default
+
+  # Basic-auth gateway in front of postgres-mcp (EasyPanel n'a pas d'auth
+  # par domaine, donc on la scope ici — le domaine du Studio n'est jamais touché).
+  # Le domaine MCP doit pointer sur CE service (port 8080), pas sur postgres-mcp.
+  mcp-auth:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - postgres-mcp
+    environment:
+      MCP_AUTH_USER: ${MCP_AUTH_USER}
+      MCP_AUTH_PASS: ${MCP_AUTH_PASS}
+    entrypoint: ["sh", "/etc/caddy/entrypoint.sh"]
+    volumes:
+      - ./volumes/mcp-auth/entrypoint.sh:/etc/caddy/entrypoint.sh:ro,z
+    networks:
+      - default
       - easypanel
 
 volumes:
