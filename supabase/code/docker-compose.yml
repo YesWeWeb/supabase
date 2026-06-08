@@ -476,5 +476,21 @@ services:
           /etc/pooler/pooler.exs)\" && /app/bin/server"
       ]
 
+  # MCP server exposing the Postgres DB over SSE (read/write) for Claude Code.
+  # Lives inside the stack so it resolves `db` on the shared network.
+  postgres-mcp:
+    image: crystaldba/postgres-mcp
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URI: postgresql://postgres:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}
+    command:
+      - "--access-mode=unrestricted"
+      - "--transport=sse"
+      - "--sse-host=0.0.0.0"
+      - "--sse-port=8000"
+
 volumes:
   db-config:
