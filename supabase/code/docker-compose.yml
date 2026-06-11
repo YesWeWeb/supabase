@@ -288,6 +288,12 @@ services:
       IMGPROXY_LOCAL_FILESYSTEM_ROOT: /
       IMGPROXY_USE_ETAG: "true"
       IMGPROXY_ENABLE_WEBP_DETECTION: ${IMGPROXY_ENABLE_WEBP_DETECTION}
+      # Dataset VCA : sources 24 MP (4000x6000), PNG jusqu'a 65 Mo.
+      # Defauts imgproxy trop bas (16,8 MP / download 5 s / process 10 s).
+      IMGPROXY_MAX_SRC_RESOLUTION: "50"
+      IMGPROXY_MAX_SRC_FILE_SIZE: "104857600"
+      IMGPROXY_DOWNLOAD_TIMEOUT: "30"
+      IMGPROXY_TIMEOUT: "30"
 
   meta:
     image: supabase/postgres-meta:v0.95.1
