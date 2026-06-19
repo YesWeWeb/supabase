@@ -448,6 +448,12 @@ services:
   supavisor:
     image: supabase/supavisor:2.7.4
     restart: unless-stopped
+    # Pooler transaction mode exposé publiquement (port host 6543).
+    # Accès filtré par IP source au niveau iptables (chaîne DOCKER-USER) :
+    # seul l'egress opnsense 176.9.78.46 (Windmill / VMs .infra) est autorisé.
+    # cf. _System/infra-access.md.
+    ports:
+      - "6543:6543"
     volumes:
       - ./volumes/pooler/pooler.exs:/etc/pooler/pooler.exs:ro,z
     healthcheck:
