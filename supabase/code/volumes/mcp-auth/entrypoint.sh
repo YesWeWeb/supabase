@@ -21,6 +21,8 @@ cat > /etc/caddy/Caddyfile <<EOF
 		$MCP_AUTH_USER $HASH
 	}
 	reverse_proxy postgres-mcp:8000 {
+		# streamable-http: the MCP SDK only accepts Host localhost (DNS-rebinding guard)
+		header_up Host localhost:8000
 		flush_interval -1
 	}
 }
